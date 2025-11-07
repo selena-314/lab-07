@@ -1,6 +1,6 @@
 ---
 title: "Lab 07 - Modelling course evaluations"
-author: "INSERT NAME HERE"
+author: "Selena Bobeica"
 date: "`r Sys.Date()`"
 output: html_document
 ---
@@ -24,7 +24,20 @@ evals<-read.csv("data/evals.csv", row.names=1)
 1.  Visualize the distribution of `score` in the dataframe `evals`.
 
 ```{r viz-score}
-# add code here
+evals %>%
+  summarise(
+    mean_score = mean(score, na.rm = TRUE),
+    median_score = median(score, na.rm = TRUE),
+    sd_score = sd(score, na.rm = TRUE),
+    min_score = min(score, na.rm = TRUE),
+    max_score = max(score, na.rm = TRUE)
+  )
+
+ggplot(evals, aes(x = score)) +
+  geom_histogram(binwidth = 0.2, fill = "lightblue", color = "white") +
+  labs(title= "Distribution of course evaluation scores",
+       x = "Course evaluation score",
+       y = "Count")
 ```
 
 *Add your other details and narratives here.*
@@ -32,7 +45,14 @@ evals<-read.csv("data/evals.csv", row.names=1)
 2.  Visualize and describe the relationship between `score` and `bty_avg` using `geom_point()` to represent the data. 
 
 ```{r scatterplot}
-# add code here
+ggplot(evals, aes(x = bty_avg, y = score)) +
+  geom_jitter(width = 0.1, height = 0.1, color = "lightblue", alpha = 0.7) +
+  labs(
+    title = "Relationship between Instructor Beauty and Course Evaluation Score (with Jitter)",
+    x = "Average Beauty Rating (bty_avg)",
+    y = "Course Evaluation Score"
+  ) +
+  theme_minimal()
 ```
 
 *Add your narrative and other details here.*
